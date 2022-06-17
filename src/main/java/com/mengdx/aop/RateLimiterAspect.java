@@ -12,7 +12,6 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.core.annotation.Order;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -33,7 +32,7 @@ import java.util.concurrent.TimeUnit;
  * @date 2020/10/16 2:47 下午
  */
 @Aspect
-//@Component
+@Component
 @Slf4j
 @Order(11)
 @RequiredArgsConstructor
