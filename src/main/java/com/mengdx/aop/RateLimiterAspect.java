@@ -14,6 +14,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.AnnotationUtils;
+import org.springframework.core.annotation.Order;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.stereotype.Component;
@@ -31,32 +32,29 @@ import java.util.concurrent.TimeUnit;
  * @author Mengdl
  * @date 2020/10/16 2:47 下午
  */
-@Slf4j
 @Aspect
-@Component
-//@RequiredArgsConstructor
+//@Component
+@Slf4j
+@Order(11)
+@RequiredArgsConstructor
 public class RateLimiterAspect {
 
     private final static String SEPARATOR = ":";
     private final static String REDIS_LIMIT_KEY_PREFIX = "limit";
-    @Autowired
-    private StringRedisTemplate stringRedisTemplate;
-    @Autowired
-    private RedisScript<Long> limitRedisScript;
+    private final StringRedisTemplate stringRedisTemplate;
+    private final RedisScript<Long> limitRedisScript;
 
-//    @Pointcut("@annotation(com.mengdx.annotation.RateLimiter)")
-//    private void rateLimit() {
-//    }
-//    @Around("rateLimit()")
-//    public Object redisRepeat(ProceedingJoinPoint point) throws Throwable {
-      @Around("@annotation(rateLimiter)")
-      public Object redisRepeat(ProceedingJoinPoint point, RateLimiter rateLimiter) throws Throwable {
-
+    @Pointcut("@annotation(com.mengdx.annotation.RateLimiter)")
+    private void rateLimit() {
+    }
+    
+    @Around("rateLimit()")
+    public Object redisRepeat(ProceedingJoinPoint point) throws Throwable {
         MethodSignature signature = (MethodSignature) point.getSignature();
         Method method = signature.getMethod();
 
         // 通过 AnnotationUtils.findAnnotation 获取 RateLimiter 注解
-//        RateLimiter rateLimiter = AnnotationUtils.findAnnotation(method, RateLimiter.class);
+        RateLimiter rateLimiter = AnnotationUtils.findAnnotation(method, RateLimiter.class);
         if (rateLimiter != null) {
             // limit:类名:方法名
             String key = REDIS_LIMIT_KEY_PREFIX

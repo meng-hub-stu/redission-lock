@@ -2,6 +2,7 @@ package com.mengdx.annotation;
 
 import com.mengdx.entity.enums.RateLimiterTypeEnum;
 import org.springframework.core.annotation.AliasFor;
+import org.springframework.core.annotation.Order;
 
 import java.lang.annotation.*;
 import java.util.concurrent.TimeUnit;
@@ -14,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
+@Order(value = 11)
 public @interface RateLimiter {
 
     long DEFAULT_MAX_REQUEST = 1;

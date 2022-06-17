@@ -33,7 +33,7 @@ import static jodd.util.StringPool.DOT;
  * @date 2022/01/18
  */
 @Aspect
-@Component
+//@Component
 @Slf4j
 @Order(10)
 public class RedisLockAspect {

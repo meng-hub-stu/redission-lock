@@ -1,3 +1,4 @@
 # Auto Configure
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.mengdx.aop.RedisLockAspect
+com.mengdx.aop.RedisLockAspect,\
+com.mengdx.aop.RateLimiterAspect
