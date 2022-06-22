@@ -3,6 +3,7 @@ package com.mengdx.aop;
 import cn.hutool.core.util.StrUtil;
 import com.mengdx.annotation.RateLimiter;
 import com.mengdx.entity.enums.RateLimiterTypeEnum;
+import com.mengdx.exception.RedisRuntimeException;
 import com.mengdx.utils.AspectUtil;
 import com.mengdx.utils.IpUtil;
 import lombok.RequiredArgsConstructor;
@@ -71,7 +72,10 @@ public class RateLimiterAspect {
             }
 
             // 执行限流方法，判断是否应该限流
-            Assert.isTrue(shouldLimited(key, rateLimiter.max(), rateLimiter.timeout(), rateLimiter.timeUnit()), "操作过于频繁，请稍后再试");
+//            Assert.isTrue(shouldLimited(key, rateLimiter.max(), rateLimiter.timeout(), rateLimiter.timeUnit()), "操作过于频繁，请稍后再试");
+            if (!shouldLimited(key, rateLimiter.max(), rateLimiter.timeout(), rateLimiter.timeUnit())) {
+                throw new RedisRuntimeException("操作过于频繁，请稍后再试");
+            }
         }
 
         return point.proceed();
