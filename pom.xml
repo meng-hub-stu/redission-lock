@@ -23,6 +23,7 @@
         <commons-codec>1.11</commons-codec>
         <commons-lang3>3.4</commons-lang3>
         <commons-io>1.3.2</commons-io>
+        <fastjson>1.2.74</fastjson>
     </properties>
     <dependencies>
         <dependency>
@@ -72,7 +73,12 @@
             <artifactId>hutool-all</artifactId>
             <version>${hutool.version}</version>
         </dependency>
-
+        <!--fastjson-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson}</version>
+        </dependency>
     </dependencies>
 
 </project>
